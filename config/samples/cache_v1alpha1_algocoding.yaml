@@ -1,0 +1,7 @@
+apiVersion: cache.algo.com/v1alpha1
+kind: AlgoCoding
+metadata:
+  name: algocoding-sample
+spec:
+  # Add fields here
+  foo: bar

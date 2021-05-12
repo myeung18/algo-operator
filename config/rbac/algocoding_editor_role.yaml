@@ -1,0 +1,24 @@
+# permissions for end users to edit algocodings.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: algocoding-editor-role
+rules:
+- apiGroups:
+  - cache.algo.com
+  resources:
+  - algocodings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cache.algo.com
+  resources:
+  - algocodings/status
+  verbs:
+  - get
