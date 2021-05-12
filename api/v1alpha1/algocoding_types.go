@@ -29,13 +29,17 @@ type AlgoCodingSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of AlgoCoding. Edit algocoding_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Foo      string `json:"foo,omitempty"`
+	Replicas int32  `json:"replicas,omitempty"`
+	WebImage string `json:"webImage,omitempty"`
+	DBImage  string `json:"dbImage,omitempty"`
 }
 
 // AlgoCodingStatus defines the observed state of AlgoCoding
 type AlgoCodingStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	PodNames []string `json:"podNames"`
 }
 
 //+kubebuilder:object:root=true
