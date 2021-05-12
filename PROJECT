@@ -5,7 +5,7 @@ plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: algo-operator
-repo: github.com/myeugn18/algo-operator
+repo: github.com/myeung18/algo-operator
 resources:
 - api:
     crdVersion: v1

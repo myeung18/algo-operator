@@ -29,10 +29,19 @@ type AlgoCodingSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of AlgoCoding. Edit algocoding_types.go to remove/update
-	Foo      string `json:"foo,omitempty"`
-	Replicas int32  `json:"replicas,omitempty"`
+	Foo string `json:"foo,omitempty"`
+
+	// +operator-sdk:csv:customresourcedefinitions:type=spec,displayName="Number of Replicas (or pods)"
+	// +operator-sdk:csv:customresourcedefinitions:type=spec,xDescriptors={"urn:alm:descriptor:com.tectonic.ui:text"}
+	Replicas int32 `json:"replicas,omitempty"`
+
+	// +operator-sdk:csv:customresourcedefinitions:type=spec,displayName="Web application image URL"
+	// +operator-sdk:csv:customresourcedefinitions:type=spec,xDescriptors={"urn:alm:descriptor:com.tectonic.ui:text"}
 	WebImage string `json:"webImage,omitempty"`
-	DBImage  string `json:"dbImage,omitempty"`
+
+	// +operator-sdk:csv:customresourcedefinitions:type=spec,displayName="DB image URL associated with the Web application"
+	// +operator-sdk:csv:customresourcedefinitions:type=spec,xDescriptors={"urn:alm:descriptor:com.tectonic.ui:text"}
+	DBImage string `json:"dbImage,omitempty"`
 }
 
 // AlgoCodingStatus defines the observed state of AlgoCoding

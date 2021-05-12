@@ -1,4 +1,4 @@
-module github.com/myeugn18/algo-operator
+module github.com/myeung18/algo-operator
 
 go 1.15
 
