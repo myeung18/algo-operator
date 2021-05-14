@@ -49,6 +49,10 @@ type AlgoCodingStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	PodNames []string `json:"podNames"`
+
+	//+operator-sdk:csv:customresourcedefinitions:type=status,displayName="Pod Size- here",xDescriptors="urn:alm:descriptor:com.tectonic.ui:Text"
+	// the number of pod created
+	Size int32 `json:"size,omitempty"`
 }
 
 //+kubebuilder:object:root=true

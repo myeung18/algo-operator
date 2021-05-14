@@ -43,6 +43,12 @@ spec:
         path: webImage
         x-descriptors:
         - urn:alm:descriptor:com.tectonic.ui:text
+      statusDescriptors:
+      - description: the number of pod created
+        displayName: Pod Size- here
+        path: size
+        x-descriptors:
+        - urn:alm:descriptor:com.tectonic.ui:Text
       version: v1alpha1
   description: Algo Coding Operator for coder
   displayName: Algocoding operator
@@ -245,6 +251,6 @@ spec:
     url: https://algo-operator.domain
   maturity: alpha
   provider:
-    name: Marco Y.
+    name: M. Y.
     url: www.leetcode.com/...
   version: 0.0.1

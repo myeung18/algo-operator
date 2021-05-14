@@ -90,6 +90,11 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		return ctrl.Result{}, err
 	}
 
+	log.Info("Pod List size: ", "len:", len(podList.Items))
+	//for k,v := range podList.Items {
+	//	log.Info("map: ", k , v)
+	//}
+
 	//count the pods that are pending or running as available
 	var available []corev1.Pod
 	for _, pod := range podList.Items {
@@ -108,7 +113,9 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 
 	status := cachev1alpha1.AlgoCodingStatus{
 		PodNames: availPodName,
+		Size:     int32(len(availPodName)),
 	}
+
 	if !reflect.DeepEqual(instance.Status, status) {
 		instance.Status = status
 		err = r.Client.Status().Update(context.TODO(), instance)
@@ -118,6 +125,7 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		}
 	}
 
+	log.Info("after updating status.... ", "", "")
 	numAvailable := int32(len(available))
 	if numAvailable > instance.Spec.Replicas {
 		log.Info("Scaling down the number of pods is more than expected. going to remove few of them. ")

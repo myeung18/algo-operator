@@ -58,6 +58,10 @@ spec:
                 items:
                   type: string
                 type: array
+              size:
+                description: the number of pod created
+                format: int32
+                type: integer
             required:
             - podNames
             type: object
