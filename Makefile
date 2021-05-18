@@ -192,3 +192,13 @@ catalog-build: opm ## Build a catalog image.
 .PHONY: catalog-push
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
+
+
+docker-lab-build: test
+	docker build -t "$(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")/$(IMAGE_REPOSITORY):$(IMAGE_TAG)" .
+
+docker-lab-push: test
+	docker push "$(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")/$(IMAGE_REPOSITORY):$(IMAGE_TAG)"
+
+docker-lab-login:
+	docker login -u opentlc-mgr -p $(shell oc whoami -t) $(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")
