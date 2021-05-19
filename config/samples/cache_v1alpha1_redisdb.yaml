@@ -1,0 +1,7 @@
+apiVersion: cache.algo.com/v1alpha1
+kind: Redisdb
+metadata:
+  name: redisdb-sample
+spec:
+  # Add fields here
+  foo: bar

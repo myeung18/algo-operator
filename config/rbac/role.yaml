@@ -57,6 +57,32 @@ rules:
   - patch
   - update
 - apiGroups:
+  - cache.algo.com
+  resources:
+  - redisdbs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cache.algo.com
+  resources:
+  - redisdbs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cache.algo.com
+  resources:
+  - redisdbs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - ""
   resources:
   - pods

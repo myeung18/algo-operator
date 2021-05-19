@@ -1,0 +1,24 @@
+# permissions for end users to edit redisdbs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: redisdb-editor-role
+rules:
+- apiGroups:
+  - cache.algo.com
+  resources:
+  - redisdbs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cache.algo.com
+  resources:
+  - redisdbs/status
+  verbs:
+  - get
