@@ -193,6 +193,7 @@ catalog-build: opm ## Build a catalog image.
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
 
+IMAGE_REPOSITORY ?= sap-commerce/$(IMAGE_TAG_BASE)          ##namespace + image name
 
 docker-lab-build: test
 	docker build -t "$(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")/$(IMAGE_REPOSITORY):$(IMAGE_TAG)" .
