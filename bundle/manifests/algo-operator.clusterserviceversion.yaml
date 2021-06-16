@@ -12,8 +12,18 @@ metadata:
           },
           "spec": {
             "dbImage": "quay.io/bclaster/roar-db:1.0.2",
-            "replicas": 1,
+            "replicas": 2,
             "webImage": "quay.io/bclaster/roar-web:1.0.1"
+          }
+        },
+        {
+          "apiVersion": "cache.algo.com/v1alpha1",
+          "kind": "Redisdb",
+          "metadata": {
+            "name": "redisdb-sample"
+          },
+          "spec": {
+            "foo": "bar"
           }
         }
       ]
@@ -49,6 +59,11 @@ spec:
         path: size
         x-descriptors:
         - urn:alm:descriptor:com.tectonic.ui:Text
+      version: v1alpha1
+    - description: Redisdb is the Schema for the redisdbs API
+      displayName: Redisdb
+      kind: Redisdb
+      name: redisdbs.cache.algo.com
       version: v1alpha1
   description: Algo Coding Operator for coder
   displayName: Algocoding operator
@@ -105,6 +120,32 @@ spec:
           - cache.algo.com
           resources:
           - algocodings/status
+          verbs:
+          - get
+          - patch
+          - update
+        - apiGroups:
+          - cache.algo.com
+          resources:
+          - redisdbs
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - cache.algo.com
+          resources:
+          - redisdbs/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - cache.algo.com
+          resources:
+          - redisdbs/status
           verbs:
           - get
           - patch

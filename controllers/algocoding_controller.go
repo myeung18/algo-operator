@@ -182,6 +182,14 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 			log.Error(err, "failed to create a service for the pod", "svc.Name", svc.Name)
 			return ctrl.Result{}, err
 		}
+
+		ro := newRouteForService(instance)
+		err = r.Client.Create(context.TODO(), ro)
+		if err != nil {
+			log.Error(err, "failed to create a Route for the pod", "svc.Name", svc.Name)
+			return ctrl.Result{}, err
+		}
+
 		return ctrl.Result{Requeue: true}, nil
 	}
 
@@ -189,6 +197,30 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 }
 
 var nextPort = 0
+
+func newRouteForService(cr *cachev1alpha1.AlgoCoding) *routev1.Route {
+
+	return &routev1.Route{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      cr.Name + "-service-9",
+			Namespace: cr.Namespace,
+			Labels: map[string]string{
+				"app":        "test-label",
+				"algocoding": "Go",
+			},
+		},
+		Spec: routev1.RouteSpec{
+			Host: "",
+			Port: &routev1.RoutePort{
+				TargetPort: intstr.FromString("9001"),
+			},
+			To: routev1.RouteTargetReference{
+				Kind: "Service",
+				Name: cr.Name,
+			},
+		},
+	}
+}
 
 func newServiceForPod(cr *cachev1alpha1.AlgoCoding) *corev1.Service {
 	strPort := strconv.Itoa(nextPort)
@@ -212,26 +244,6 @@ func newServiceForPod(cr *cachev1alpha1.AlgoCoding) *corev1.Service {
 			Type: corev1.ServiceTypeNodePort,
 		},
 	}
-}
-
-func newRouteForService() *routev1.Route {
-	r := &routev1.Route{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      "route name",
-			Namespace: "algo-operator",
-			Labels: map[string]string{
-				"create": "labels",
-			},
-		},
-		Spec: routev1.RouteSpec{
-			Host: "",
-			Port: &routev1.RoutePort{
-				TargetPort: intstr.FromString("8080"),
-			},
-		},
-	}
-
-	return r
 }
 
 func newPodForCR(cr *cachev1alpha1.AlgoCoding) *corev1.Pod {
@@ -277,7 +289,7 @@ func newPodForCR(cr *cachev1alpha1.AlgoCoding) *corev1.Pod {
 // SetupWithManager sets up the controller with the Manager.
 func (r *AlgoCodingReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&cachev1alpha1.AlgoCoding{}).
+		For(&cachev1alpha1.AlgoCoding{}). //watching this CRD
 		Owns(&appsv1.Deployment{}).
 		Complete(r)
 }

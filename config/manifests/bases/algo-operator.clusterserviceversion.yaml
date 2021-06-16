@@ -34,6 +34,11 @@ spec:
         x-descriptors:
         - urn:alm:descriptor:com.tectonic.ui:Text
       version: v1alpha1
+    - description: Redisdb is the Schema for the redisdbs API
+      displayName: Redisdb
+      kind: Redisdb
+      name: redisdbs.cache.algo.com
+      version: v1alpha1
   description: Algo Coding Operator for coder
   displayName: Algocoding operator
   icon:

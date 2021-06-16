@@ -35,6 +35,8 @@ import (
 	cachev1alpha1 "github.com/myeung18/algo-operator/api/v1alpha1"
 	"github.com/myeung18/algo-operator/controllers"
 	//+kubebuilder:scaffold:imports
+
+	routev1 "github.com/openshift/api/route/v1"
 )
 
 var (
@@ -45,6 +47,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
+	utilruntime.Must(routev1.AddToScheme(scheme))
 	utilruntime.Must(cachev1alpha1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }

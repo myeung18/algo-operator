@@ -201,13 +201,28 @@ catalog-build: opm ## Build a catalog image.
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
 
-IMAGE_REPOSITORY ?= sap-commerce/$(IMAGE_TAG_BASE)          ##namespace + image name
+##namespace + image name, from nexus, check notes
+IMAGE_REPOSITORY ?= sap-commerce/nexus
+IMAGE_TAG=latest
 
 docker-lab-build: test
 	docker build -t "$(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")/$(IMAGE_REPOSITORY):$(IMAGE_TAG)" .
 
-docker-lab-push: test
+docker-lab-push:
 	docker push "$(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")/$(IMAGE_REPOSITORY):$(IMAGE_TAG)"
 
 docker-lab-login:
-	docker login -u opentlc-mgr -p $(shell oc whoami -t) $(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")
+	docker login -u myeung -p $(shell oc whoami -t) $(shell oc get route default-route -n openshift-image-registry -o jsonpath="{.spec.host}")
+
+#oc login --token=sha256~ODuGXaF1pyR4OKxjxQcThTMqYtytx_8ztl_p93QXrFQ --server=https://api.mw-ocp4.cloud.lab.eng.bos.redhat.com:6443
+
+
+RELEASE_VERSION ?= 2.3.1
+os=$(shell go env GOOS)
+arch=$(shell go env GOARCH)
+
+kubebuilder:
+	echo "os is $${os}"
+	echo "os is 2 : $(os) $(GOBIN)"
+	curl -L https://github.com/kubernetes-sigs/kubebuilder/releases/download/v${RELEASE_VERSION}/kubebuilder_${RELEASE_VERSION}_${os}_${arch}.tar.gz | tar -xz -C /tmp/
+	sudo mv /tmp/kubebuilder_${RELEASE_VERSION}_${os}_${arch} ./bin/kubebuilder
