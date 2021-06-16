@@ -37,6 +37,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	routev1 "github.com/openshift/api/route/v1"
 )
 
 // AlgoCodingReconciler reconciles a AlgoCoding object
@@ -144,7 +146,7 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 			err := r.Client.Get(context.TODO(), types.NamespacedName{
 				Name:      sName,
 				Namespace: req.Namespace,
-			}, s) //get the service and set to pointer s
+			}, s)                                    //get the service and set to pointer s
 			err = r.Client.Delete(context.TODO(), s) //and delete it
 			if err != nil {
 				if errors.IsNotFound(err) {
@@ -210,6 +212,26 @@ func newServiceForPod(cr *cachev1alpha1.AlgoCoding) *corev1.Service {
 			Type: corev1.ServiceTypeNodePort,
 		},
 	}
+}
+
+func newRouteForService() *routev1.Route {
+	r := &routev1.Route{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "route name",
+			Namespace: "algo-operator",
+			Labels: map[string]string{
+				"create": "labels",
+			},
+		},
+		Spec: routev1.RouteSpec{
+			Host: "",
+			Port: &routev1.RoutePort{
+				TargetPort: intstr.FromString("8080"),
+			},
+		},
+	}
+
+	return r
 }
 
 func newPodForCR(cr *cachev1alpha1.AlgoCoding) *corev1.Pod {
