@@ -50,6 +50,9 @@ type RedisdbReconciler struct {
 func (r *RedisdbReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = r.Log.WithValues("redisdb", req.NamespacedName)
 
+	log := r.Log.WithValues("", req.NamespacedName)
+	log.Info("Reconciling redisdb instance - your logic here")
+
 	// your logic here
 
 	return ctrl.Result{}, nil

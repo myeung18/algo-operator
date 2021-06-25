@@ -146,7 +146,7 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 			err := r.Client.Get(context.TODO(), types.NamespacedName{
 				Name:      sName,
 				Namespace: req.Namespace,
-			}, s)                                    //get the service and set to pointer s
+			}, s) //get the service and set to pointer s
 			err = r.Client.Delete(context.TODO(), s) //and delete it
 			if err != nil {
 				if errors.IsNotFound(err) {
@@ -261,6 +261,7 @@ func newPodForCR(cr *cachev1alpha1.AlgoCoding) *corev1.Pod {
 	}
 
 	return &corev1.Pod{
+		TypeMeta: metav1.TypeMeta{},
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      cr.Name + "-pod-" + strPort,
 			Namespace: cr.Namespace,
@@ -282,7 +283,10 @@ func newPodForCR(cr *cachev1alpha1.AlgoCoding) *corev1.Pod {
 				},
 			},
 		},
+		Status: corev1.PodStatus{},
 	}
+
+
 
 }
 
