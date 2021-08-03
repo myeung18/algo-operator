@@ -18,10 +18,13 @@ package controllers
 
 import (
 	"context"
+	"fmt"
+	rbacv1 "k8s.io/api/rbac/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/util/intstr"
+	"k8s.io/client-go/kubernetes"
 	"reflect"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
@@ -286,8 +289,6 @@ func newPodForCR(cr *cachev1alpha1.AlgoCoding) *corev1.Pod {
 		Status: corev1.PodStatus{},
 	}
 
-
-
 }
 
 // SetupWithManager sets up the controller with the Manager.
@@ -296,4 +297,31 @@ func (r *AlgoCodingReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&cachev1alpha1.AlgoCoding{}). //watching this CRD
 		Owns(&appsv1.Deployment{}).
 		Complete(r)
+}
+
+func createRoleBindingTest() {
+	var xx *kubernetes.Clientset
+	var obj interface{}
+	namespaceObj := obj.(*corev1.Namespace)
+	namespaceName := namespaceObj.Name
+
+	roleBinding := &rbacv1.RoleBinding{
+		TypeMeta: metav1.TypeMeta{
+			Kind:       "RoleBinding",
+			APIVersion: "rbac.authorization.k8s.io/v1beta1",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      fmt.Sprintf("ad-kubernetes-%s", namespaceName),
+			Namespace: namespaceName,
+		},
+		Subjects: []rbacv1.Subject{
+			rbacv1.Subject{
+				Kind: "",
+				Name: "",
+			},
+		},
+		RoleRef: rbacv1.RoleRef{},
+	}
+	opts := metav1.CreateOptions{}
+	xx.RbacV1().RoleBindings("").Create(context.TODO(), roleBinding, opts)
 }
