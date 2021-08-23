@@ -3,6 +3,7 @@ module github.com/myeung18/algo-operator
 go 1.15
 
 require (
+	github.com/cockroachdb/errors v1.8.6 // indirect
 	github.com/go-logr/logr v0.3.0
 	github.com/onsi/ginkgo v1.14.1
 	github.com/onsi/gomega v1.10.2
