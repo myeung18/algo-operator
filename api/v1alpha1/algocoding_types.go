@@ -46,7 +46,7 @@ type AlgoCodingSpec struct {
 	// (Optional) TLSEnabled determines if TLS is enabled for your algo-Cluster Cluster
 	// +operator-sdk:csv:customresourcedefinitions:type=spec,displayName="TLS Enabled",xDescriptors="urn:alm:descriptor:com.tectonic.ui:booleanSwitch"
 	// +optional
-	TLSEnabled    bool   `json:"tlsEnabled,omitempty"`
+	TLSEnabled bool `json:"tlsEnabled,omitempty"`
 	// (Optional) The secret with certificates and a private key for the TLS endpoint
 	// on the database port. The standard naming of files is expected (tls.key, tls.crt, ca.crt)
 	// Default: ""

@@ -18,11 +18,9 @@ const (
 	CrdbRestartTypeAnnotation    = "crdb.io/restarttype"
 )
 
-
 type Cluster struct {
-
-	cr *api.AlgoCoding
-	scheme *runtime.Scheme
+	cr       *api.AlgoCoding
+	scheme   *runtime.Scheme
 	initTime metav1.Time
 }
 

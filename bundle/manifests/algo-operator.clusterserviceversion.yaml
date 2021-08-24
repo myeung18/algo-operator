@@ -12,7 +12,7 @@ metadata:
           },
           "spec": {
             "dbImage": "quay.io/bclaster/roar-db:1.0.2",
-            "replicas": 2,
+            "replicas": 1,
             "webImage": "quay.io/bclaster/roar-web:1.0.1"
           }
         },
@@ -49,6 +49,11 @@ spec:
         path: replicas
         x-descriptors:
         - urn:alm:descriptor:com.tectonic.ui:text
+      - description: (Optional) TLSEnabled determines if TLS is enabled for your algo-Cluster Cluster
+        displayName: TLS Enabled
+        path: tlsEnabled
+        x-descriptors:
+        - urn:alm:descriptor:com.tectonic.ui:booleanSwitch
       - displayName: Web application image URL
         path: webImage
         x-descriptors:

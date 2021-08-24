@@ -42,9 +42,18 @@ spec:
                 description: Foo is an example field of AlgoCoding. Edit algocoding_types.go
                   to remove/update
                 type: string
+              nodeTLSSecret:
+                description: '(Optional) The secret with certificates and a private
+                  key for the TLS endpoint on the database port. The standard naming
+                  of files is expected (tls.key, tls.crt, ca.crt) Default: ""'
+                type: string
               replicas:
                 format: int32
                 type: integer
+              tlsEnabled:
+                description: (Optional) TLSEnabled determines if TLS is enabled for
+                  your algo-Cluster Cluster
+                type: boolean
               webImage:
                 type: string
             type: object

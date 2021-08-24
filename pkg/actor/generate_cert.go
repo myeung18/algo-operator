@@ -49,8 +49,6 @@ func (rc *generateCert) Act(ctx context.Context, cluster *resource.Cluster) erro
 		log.V(DEBUGLEVEL).Info("Skipping TLS cert generation", "enabled", cluster.Spec().TLSEnabled, "secret", cluster.Spec().NodeTLSSecret)
 	}
 
-
-
 	return nil
 }
 
