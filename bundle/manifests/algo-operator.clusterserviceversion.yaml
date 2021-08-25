@@ -12,7 +12,7 @@ metadata:
           },
           "spec": {
             "dbImage": "quay.io/bclaster/roar-db:1.0.2",
-            "replicas": 1,
+            "replicas": 2,
             "webImage": "quay.io/bclaster/roar-web:1.0.1"
           }
         },
@@ -170,6 +170,17 @@ spec:
           - ""
           resources:
           - services
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - update
+          - watch
+        - apiGroups:
+          - route
+          resources:
+          - routes
           verbs:
           - create
           - delete

@@ -11,6 +11,26 @@ operator-sdk create webhook --group batch --version v1 --kind CronJob --defaulti
 
 ```
 
+```shell
+# check role/sa/binding
+oc get clusterrolebinding -o wide | grep algo
+oc describe sa algo-operator-controller-manager
+
+oc get clusterroles
+oc get rolebindings -o wide | grep algo
+oc get roles
+oc describe clusterrolebinding algo-operator.v0.0.1-5f5ddccc66
+oc get rolebinding.rbac
+oc describe rolebing.rbac <...>
+oc describe role algo-operator.v0.0.1-5f5ddccc66
+oc describe clusterrole.rbac algo-operator.v0.0.1-5f5ddccc66
+
+#add role to sa
+oc create clusterrole route-create --verb=create --resource=route
+oc policy add-role-to-user route-create -z algo-operator-controller-manager
+
+```
+
 
 # dbaas example:
 ```

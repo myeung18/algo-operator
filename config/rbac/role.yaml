@@ -104,3 +104,14 @@ rules:
   - list
   - update
   - watch
+- apiGroups:
+  - route
+  resources:
+  - routes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - update
+  - watch
