@@ -30,6 +30,14 @@ oc create clusterrole route-create --verb=create --resource=route
 oc policy add-role-to-user route-create -z algo-operator-controller-manager
 
 ```
+```yaml
+# build with compatible operator-sdk and deploy with operator-sdk run
+operator-sdk run bundle quay.io/myeung/algo-operator-bundle:v0.0.1
+
+#apply CR, then expose srv
+oc expose svc algocoding-sample-service-32000
+
+```
 
 
 # dbaas example:
