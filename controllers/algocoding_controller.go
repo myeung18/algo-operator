@@ -187,12 +187,12 @@ func (r *AlgoCodingReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 			return ctrl.Result{}, err
 		}
 
-		ro := newRouteForService(instance)
-		err = r.Client.Create(context.TODO(), ro)
-		if err != nil {
-			log.Error(err, "failed to create a Route for the pod", "svc.Name", svc.Name)
-			return ctrl.Result{}, err
-		}
+		//ro := newRouteForService(instance)
+		//err = r.Client.Create(context.TODO(), ro)
+		//if err != nil {
+		//	log.Error(err, "failed to create a Route for the pod", "svc.Name", svc.Name)
+		//	return ctrl.Result{}, err
+		//}
 
 		return ctrl.Result{Requeue: true}, nil
 	}
@@ -239,12 +239,34 @@ func newServiceForPod(cr *cachev1alpha1.AlgoCoding) *corev1.Service {
 		},
 		Spec: corev1.ServiceSpec{
 			Selector: labels,
-			Ports: []corev1.ServicePort{{
-				Protocol:   corev1.ProtocolTCP,
-				Port:       8089,
-				TargetPort: intstr.FromInt(8080),
-				NodePort:   int32(nextPort),
-			}},
+			Ports: []corev1.ServicePort{
+				{
+					Name:       "8089-tcp",
+					Protocol:   corev1.ProtocolTCP,
+					Port:       8089,
+					TargetPort: intstr.FromInt(8080),
+					NodePort:   int32(nextPort),
+				},
+				{
+					Name:       "9011-tcp",
+					Protocol:   corev1.ProtocolTCP,
+					Port:       9011,
+					TargetPort: intstr.FromInt(9011),
+				},
+				{
+					Name:       "9012-tcp",
+					Protocol:   corev1.ProtocolTCP,
+					Port:       9012,
+					TargetPort: intstr.FromInt(9012),
+				},
+				{
+					Name:       "8009-tcp",
+					Protocol:   corev1.ProtocolTCP,
+					Port:       8009,
+					TargetPort: intstr.FromInt(8009),
+					NodePort:   int32(nextPort + 5),
+				},
+			},
 			Type: corev1.ServiceTypeNodePort,
 		},
 	}
@@ -274,6 +296,16 @@ func newPodForCR(cr *cachev1alpha1.AlgoCoding) *corev1.Pod {
 		Spec: corev1.PodSpec{
 			Containers: []corev1.Container{
 				{
+					Ports: []corev1.ContainerPort{
+						{
+							ContainerPort: 9011,
+							Protocol:      corev1.ProtocolTCP,
+						},
+						{
+							ContainerPort: 9012,
+							Protocol:      corev1.ProtocolTCP,
+						},
+					},
 					Name:    "algocoding-web",
 					Image:   cr.Spec.WebImage,
 					Command: []string{"catalina.sh", "run"},
