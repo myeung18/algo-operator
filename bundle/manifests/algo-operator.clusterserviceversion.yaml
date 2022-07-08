@@ -247,6 +247,10 @@ spec:
                   initialDelaySeconds: 15
                   periodSeconds: 20
                 name: manager
+                ports:
+                - containerPort: 9443
+                  name: webhook-server
+                  protocol: TCP
                 readinessProbe:
                   httpGet:
                     path: /readyz
@@ -312,3 +316,46 @@ spec:
     name: M. Y.
     url: www.leetcode.com/...
   version: 0.0.1
+  webhookdefinitions:
+  - admissionReviewVersions:
+    - v1
+    - v1beta1
+    containerPort: 443
+    deploymentName: algo-operator-controller-manager
+    failurePolicy: Fail
+    generateName: vredisdb.kb.io
+    rules:
+    - apiGroups:
+      - cache.algo.com
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - redisdbs
+    sideEffects: None
+    targetPort: 9443
+    type: ValidatingAdmissionWebhook
+    webhookPath: /validate-cache-algo-com-v1alpha1-redisdb
+  - admissionReviewVersions:
+    - v1
+    - v1beta1
+    containerPort: 443
+    deploymentName: algo-operator-controller-manager
+    failurePolicy: Fail
+    generateName: mredisdb.kb.io
+    rules:
+    - apiGroups:
+      - cache.algo.com
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - redisdbs
+    sideEffects: None
+    targetPort: 9443
+    type: MutatingAdmissionWebhook
+    webhookPath: /mutate-cache-algo-com-v1alpha1-redisdb

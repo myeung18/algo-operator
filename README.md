@@ -7,8 +7,12 @@ operator-sdk create api --group cache --version v1alpha1 --kind Redisdb --resour
 ./bin/controller-gen crd -w
 ./bin/controller-gen crd -h
 
+operator-sdk create webhook --group cache --version v1alpha1 --kind AlgoCoding --defaulting --programmatic-validation
 operator-sdk create webhook --group cache --version v1alpha1 --kind Redisdb --defaulting --programmatic-validation
 
+```
+```shell
+oc get po | awk 'NR>1 {print $1}' | grep algo-operator-controller-manager | xargs oc logs -f -c manager
 ```
 
 ```shell
