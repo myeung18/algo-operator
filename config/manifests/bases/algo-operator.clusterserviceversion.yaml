@@ -23,7 +23,8 @@ spec:
         path: replicas
         x-descriptors:
         - urn:alm:descriptor:com.tectonic.ui:text
-      - description: (Optional) TLSEnabled determines if TLS is enabled for your algo-Cluster Cluster
+      - description: (Optional) TLSEnabled determines if TLS is enabled for your algo-Cluster
+          Cluster
         displayName: TLS Enabled
         path: tlsEnabled
         x-descriptors:

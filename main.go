@@ -34,6 +34,7 @@ import (
 
 	cachev1alpha1 "github.com/myeung18/algo-operator/api/v1alpha1"
 	"github.com/myeung18/algo-operator/controllers"
+
 	//+kubebuilder:scaffold:imports
 
 	routev1 "github.com/openshift/api/route/v1"
@@ -103,6 +104,10 @@ func main() {
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Redisdb")
+		os.Exit(1)
+	}
+	if err = (&cachev1alpha1.Redisdb{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "Redisdb")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

@@ -28,7 +28,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    operators.operatorframework.io/builder: operator-sdk-v1.6.1+git
+    operators.operatorframework.io/builder: operator-sdk-v1.10.1+git
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
   name: algo-operator.v0.0.1
   namespace: placeholder
@@ -49,7 +49,8 @@ spec:
         path: replicas
         x-descriptors:
         - urn:alm:descriptor:com.tectonic.ui:text
-      - description: (Optional) TLSEnabled determines if TLS is enabled for your algo-Cluster Cluster
+      - description: (Optional) TLSEnabled determines if TLS is enabled for your algo-Cluster
+          Cluster
         displayName: TLS Enabled
         path: tlsEnabled
         x-descriptors:
