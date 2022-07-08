@@ -13,6 +13,27 @@ webhooks:
     service:
       name: webhook-service
       namespace: system
+      path: /mutate-cache-algo-com-v1alpha1-algocoding
+  failurePolicy: Fail
+  name: malgocoding.kb.io
+  rules:
+  - apiGroups:
+    - cache.algo.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - algocodings
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
       path: /mutate-cache-algo-com-v1alpha1-redisdb
   failurePolicy: Fail
   name: mredisdb.kb.io
@@ -35,6 +56,27 @@ metadata:
   creationTimestamp: null
   name: validating-webhook-configuration
 webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-cache-algo-com-v1alpha1-algocoding
+  failurePolicy: Fail
+  name: valgocoding.kb.io
+  rules:
+  - apiGroups:
+    - cache.algo.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - algocodings
+  sideEffects: None
 - admissionReviewVersions:
   - v1
   - v1beta1

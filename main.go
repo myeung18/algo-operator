@@ -110,6 +110,10 @@ func main() {
 		setupLog.Error(err, "unable to create webhook", "webhook", "Redisdb")
 		os.Exit(1)
 	}
+	if err = (&cachev1alpha1.AlgoCoding{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "AlgoCoding")
+		os.Exit(1)
+	}
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {
